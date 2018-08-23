@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper SYSTEM "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.xinrendai.credit.manage.mapper.NplmLoanContractMapper">
+    <select id="selectLoanContractList" resultMap="contractMap">
+        SELECT c.id id,a.id aid,b.id bid,b.LOAN_CONTRACT_NUM ,c.CONTRACT_TYPE,a.CLIENT_NAME,a.IDENTITY_TYPE,a.IDENTITY_NUM,b.purpose,b.business_type,
+        b.GUARANTEE_COMPANY,a.H_CITY,b.dept_name,b.is_expedited,b.sign_type,b.sign_date,c.LOAN_INSTALMENTS,b.is_recycle_load,
+        b.recycle_loan_cnt,c.START_DATE,c.END_DATE,b.settle_date,c.LOAN_AMOUNT,c.REPAY_ACCOUNT_BANK_NAME,c.REPAY_ACCOUNT,
+        c.PRE_FEE,c.LOAN_TYPE,c.PUT_AMOUNT FROM nplm_borrower_info a LEFT JOIN nplm_loan_contract c ON a.`ECIF_ID`=c.`ECIF_ID`
+        LEFT JOIN nplm_contract_attribute b ON b.`LOAN_CONTRACT_NUM`=c.`LOAN_CONTRACT_NUM`
+    </select>
+
+    <resultMap id="contractMap" type="com.xinrendai.credit.manage.bean.NplmLoanContract" autoMapping="true">
+        <id property="id" column="id"></id>
+        <association property="nplmBorrowerInfo" javaType="com.xinrendai.credit.manage.bean.NplmBorrowerInfo" autoMapping="true">
+            <id property="id" column="aid"></id>
+        </association>
+        <association property="nplmContractAttribute" javaType="com.xinrendai.credit.manage.bean.NplmContractAttribute" autoMapping="true">
+            <id property="id" column="bid"></id>
+        </association>
+    </resultMap>
+</mapper>
